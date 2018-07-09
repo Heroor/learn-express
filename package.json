@@ -1,10 +1,14 @@
 {
-  "name": "learn-node",
+  "name": "blog",
   "version": "1.0.0",
+  "description": "express-blog",
   "main": "index.js",
   "repository": "git@github.com:Heroor/learn-node.git",
   "author": "Bener <2388697970@qq.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "config-lite": "^2.1.0",
     "connect-flash": "^0.1.1",
