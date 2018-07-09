@@ -13,7 +13,7 @@ module.exports = function (app) {
   app.use('/comments', require('./comments'))
 
   app.get('/test', (req, res, next) => {
-    res.render('../views/header', {
+    res.render('../views/test', {
       luluDep: ['Dialog']
     })
   })

@@ -4,16 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= blog.title %></title>
+  <!-- lulu ui
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/ui.css">
   <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/color.css">
   <link rel="stylesheet" href="/css/index.css">
-  <script src="//qidian.gtimg.com/lulu/theme/peak/js/plugin/jquery.js"></script>
-  <% for(var i = 0; i < luluDep.length; i++) { %>
+  <script src="//qidian.gtimg.com/lulu/theme/peak/js/plugin/jquery.js"></script> -->
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css">
+  <link rel="stylesheet" href="/css/index.css">
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.js"></script>
+  <% /*for(var i = 0; i < luluDep.length; i++) { %>
     <script src="//qidian.gtimg.com/lulu/theme/peak/js/common/ui/<%= luluDep[i] %>.js"></script>
-  <% } %>
+  <% } */ %>
 </head>
 <body>
 <%- include('components/nav') %>
 <%- include('components/nav-setting') %>
-<%- include('components/nav-notification') %>
+<%- include('components/notification') %>

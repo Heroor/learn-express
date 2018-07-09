@@ -1,0 +1,55 @@
+<%- include('header') %>
+<form action="/submit" method="post">
+    <div>
+        <label for="idTel">手机号<span>*</span></label>
+        <input type="tel" id="idTel" class="ui-input" size="40" name="tel" required>
+    </div>
+    <div>
+        <label for="idCode">验证码<span>*</span></label>
+        <input type="code" id="idCode" class="ui-input" size="40" name="code" required pattern="\d{4}">
+    </div>
+    <div>
+        <label for="idMark">备注</label>
+       <div class="ui-textarea-x" style="width:500px;">
+            <textarea id="idMark" maxlength="140" rows="5">附件</textarea>
+            <div class="ui-textarea"></div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" id="formSubmit" class="clip">
+        <label for="formSubmit" class="ui-button ui-button-primary">注册</label>
+    </div>
+</form>
+<script>
+var myForm = new Form($('form'), {
+    avoidSend: function() {
+        if (/附件/.test($('#idMark').val())) {
+            var myConfirm = new Dialog().confirm('您提到了附件，当却没有上传，确定注册？', {
+                buttons: [{
+                    events: {
+                        click: function() {
+                            // 表单请求发送
+                            myForm.ajax();
+                            // 关闭提示框
+                            myConfirm.remove();
+                        }
+                    }
+                }, {}]
+            });
+            return true;
+        }
+    },
+    success: function(json) {
+        new Dialog().alert('<h6>注册成功！</h6>\
+            <p>您注册手机号是：'+ json.data.tel +'</p>', {
+            type: 'success'
+        });
+
+        // 表单重置
+        this[0].reset();
+    }
+}, {
+    label: true
+});
+</script>
+<%- include('footer') %>
