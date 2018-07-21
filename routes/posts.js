@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const PostModel = require('../models/posts')
+const CommentModel = require('../models/comments')
 const checkLogin = require('../middlewares/check').checkLogin
 
 router.get('/', (req, res, next) => {
@@ -60,14 +61,17 @@ router.get('/:postId', (req, res, next) => {
   const postId = req.params.postId
   Promise.all([
     PostModel.getPostById(postId),
+    CommentModel.getComments(postId), // 获取文章所有留言
     PostModel.incPv(postId) // 加一
   ]).then(function (result) {
     const post = result[0]
+    const comments = result[1]
     if (!post) {
       throw new Error('该文章不存在')
     }
     res.render('post', {
-      post: post
+      post: post,
+      comments: comments
     })
   })
     .catch(next)

@@ -1,4 +1,5 @@
 const Post = require('../lib/mongo').Post
+const CommentModel = require('./comments')
 const marked = require('marked')
 
 // 将 post 的 content md 转换成html
@@ -12,6 +13,27 @@ Post.plugin('contentToHtml', {
   aferFindOne: function (post) {
     if (post) {
       post.content = marked(post.content)
+    }
+    return post
+  }
+})
+
+// 给post添加留言数 commentCount
+Post.plugin('addCommentsCount', {
+  afterFind: function (posts) {
+    return Promise.all(posts.map(function (post) {
+      return CommentModel.getCommentsCount(post._id).then(function (commentsCount) {
+        post.commentModel = commentsCount
+        return post
+      })
+    }))
+  },
+  afterFindOne: function (post) {
+    if (post) {
+      return CommentModel.getCommentsCount(post._id).then(function (count) {
+        post.commentsCount = count
+        return post
+      })
     }
     return post
   }
@@ -34,6 +56,7 @@ module.exports = {
         model: 'User'
       })
       .addCreatedAt()
+      .addCommentsCount()
       .contentToHtml()
       .exec()
   },
@@ -49,6 +72,7 @@ module.exports = {
       .populate({path: 'author', model: 'User'})
       .sort({_id: -1})
       .addCreatedAt()
+      .addCommentsCount()
       .contentToHtml()
       .exec()
   },
@@ -74,7 +98,16 @@ module.exports = {
   },
 
   // 删除文章
-  delPostById: function (postId) {
-    return Post.deleteOne({_id: postId}).exec()
+  delPostById: function (postId, author) {
+    return Post.deleteOne({
+      author: author,
+      _id: postId
+    }).exec()
+      .then(function (res) {
+        // 文章删除后删除评论
+        if (res.result.ok && res.result.n > 0) {
+          return CommentModel.delCommentsByPostId(postId)
+        }
+      })
   }
 }
