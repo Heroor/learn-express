@@ -23,7 +23,7 @@ Post.plugin('addCommentsCount', {
   afterFind: function (posts) {
     return Promise.all(posts.map(function (post) {
       return CommentModel.getCommentsCount(post._id).then(function (commentsCount) {
-        post.commentModel = commentsCount
+        post.commentsCount = commentsCount
         return post
       })
     }))

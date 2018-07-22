@@ -1,2 +1,6 @@
 node_modules
 yarn-error.log
+config/*
+!config/default.*
+npm-debug.log
+coverage

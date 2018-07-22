@@ -7,7 +7,9 @@
   "author": "Bener <2388697970@qq.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "server": "pm2 start index.js --name 'myblog'",
+    "test": "mocha test"
   },
   "dependencies": {
     "config-lite": "^2.1.0",
@@ -19,12 +21,15 @@
     "express-session": "^1.15.6",
     "express-winston": "^2.5.1",
     "marked": "^0.4.0",
+    "mocha": "^5.2.0",
     "moment": "^2.22.2",
     "mongolass": "^4.3.4",
     "nodemon": "^1.17.5",
     "objectid-to-timestamp": "^1.3.0",
+    "pm2": "^3.0.0",
     "sha1": "^1.1.1",
-    "winston": "^3.0.0"
+    "supertest": "^3.1.0",
+    "winston": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^5.0.1",
